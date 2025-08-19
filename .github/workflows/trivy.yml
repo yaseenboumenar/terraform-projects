@@ -1,0 +1,29 @@
+name: Docker Security Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_requests:
+  branches: [ main ]
+
+jobs:
+  trivy-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
+        run: docker build -t wordpress-challenge-wordpress-ec2 .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'wordpress-challenge-wordpress-ec2'
+          format: 'table'
+          exit-code: '1'
+          severity: 'HIGH,CRITICAL'

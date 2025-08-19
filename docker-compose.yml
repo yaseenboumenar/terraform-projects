@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+  # localstack:
+  #   image: localstack/localstack:latest
+  #   ports:
+  #     - "4566:4566"
+  #     - "4571:4571"
+  #   environment:
+  #     - SERVICES=ec2
+  #     - DEBUG=1
+  #     - DEFAULT_AMI_ID=ami-12345678
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #     - "./volume:/var/lib/localstack"
+
+  mysql:
+    image: mysql:5.7
+    container_name: wordpress-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: chelsea
+      MYSQL_ROOT_PASSWORD: chelsea
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  wordpress-ec2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wordpress-ec2
+    depends_on:
+      - mysql
+    expose:
+      - "80"
+    
+    # This checks whether Apache in the container is serving content.
+    # If the check fails repeatedly, Docker will mark the container as "unhealthy."
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  
+  nginx:
+    image: nginx:latest
+    container_name: wordpress-nginx
+    depends_on:
+      - wordpress-ec2
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+volumes:
+  mysql_data:

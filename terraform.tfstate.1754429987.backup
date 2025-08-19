@@ -1,0 +1,198 @@
+{
+  "version": 4,
+  "terraform_version": "1.12.2",
+  "serial": 9,
+  "lineage": "5af711cc-1a98-6581-25a3-bdf47f8226dc",
+  "outputs": {
+    "instance_ec2_sg_id": {
+      "value": "sg-7c5fe4dacef213015",
+      "type": "string"
+    },
+    "instance_private_ip": {
+      "value": "10.233.9.143",
+      "type": "string"
+    },
+    "instance_public_dns": {
+      "value": "ec2-54-214-68-243.eu-north-1.compute.amazonaws.com",
+      "type": "string"
+    },
+    "instance_public_ip": {
+      "value": "54.214.68.243",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "module": "module.db",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "rds-sg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:eu-north-1:000000000000:security-group/sg-f4539676ff3ad1498",
+            "description": "Allow MySQL access from EC2",
+            "egress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": false,
+                "to_port": 0
+              }
+            ],
+            "id": "sg-f4539676ff3ad1498",
+            "ingress": [
+              {
+                "cidr_blocks": [],
+                "description": "",
+                "from_port": 3306,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [
+                  "sg-7c5fe4dacef213015"
+                ],
+                "self": false,
+                "to_port": 3306
+              }
+            ],
+            "name": "wordpress-rds-sg",
+            "name_prefix": "",
+            "owner_id": "000000000000",
+            "region": "eu-north-1",
+            "revoke_rules_on_delete": false,
+            "tags": null,
+            "tags_all": {},
+            "timeouts": null,
+            "vpc_id": "vpc-123456"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6OTAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "module.ec2.aws_security_group.dynamic-sg"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.ec2",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "wordpress-ec2",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "ami": "ami-12345678",
+            "arn": "arn:aws:ec2:eu-north-1::instance/i-6f67ba9caa74e6d8c",
+            "associate_public_ip_address": true,
+            "availability_zone": "eu-north-1a",
+            "capacity_reservation_specification": [],
+            "cpu_options": [],
+            "credit_specification": [],
+            "disable_api_stop": false,
+            "disable_api_termination": false,
+            "ebs_block_device": [],
+            "ebs_optimized": false,
+            "enable_primary_ipv6": null,
+            "enclave_options": [],
+            "ephemeral_block_device": [],
+            "get_password_data": false,
+            "hibernation": false,
+            "host_id": "",
+            "host_resource_group_arn": null,
+            "iam_instance_profile": "",
+            "id": "i-6f67ba9caa74e6d8c",
+            "instance_initiated_shutdown_behavior": "stop",
+            "instance_lifecycle": "",
+            "instance_market_options": [],
+            "instance_state": "running",
+            "instance_type": "t3.micro",
+            "ipv6_address_count": 0,
+            "ipv6_addresses": [],
+            "key_name": "",
+            "launch_template": [],
+            "maintenance_options": [],
+            "metadata_options": [
+              {
+                "http_endpoint": "enabled",
+                "http_protocol_ipv6": "disabled",
+                "http_put_response_hop_limit": 1,
+                "http_tokens": "optional",
+                "instance_metadata_tags": "disabled"
+              }
+            ],
+            "monitoring": false,
+            "network_interface": [],
+            "outpost_arn": "",
+            "password_data": "",
+            "placement_group": "",
+            "placement_partition_number": 0,
+            "primary_network_interface_id": "eni-13465d242d5b238e1",
+            "private_dns": "ip-10-233-9-143.eu-north-1.compute.internal",
+            "private_dns_name_options": [],
+            "private_ip": "10.233.9.143",
+            "public_dns": "ec2-54-214-68-243.eu-north-1.compute.amazonaws.com",
+            "public_ip": "54.214.68.243",
+            "region": "eu-north-1",
+            "root_block_device": [
+              {
+                "delete_on_termination": true,
+                "device_name": "/dev/sda1",
+                "encrypted": false,
+                "iops": 0,
+                "kms_key_id": "",
+                "tags": {},
+                "tags_all": {},
+                "throughput": 0,
+                "volume_id": "vol-b563f32115bd75949",
+                "volume_size": 8,
+                "volume_type": "gp2"
+              }
+            ],
+            "secondary_private_ips": [],
+            "security_groups": [
+              "dynamic-block-sg"
+            ],
+            "source_dest_check": true,
+            "spot_instance_request_id": "",
+            "subnet_id": "subnet-b62fd154ad926a0e4",
+            "tags": {
+              "name": "wordpress-ec2"
+            },
+            "tags_all": {
+              "name": "wordpress-ec2"
+            },
+            "tenancy": "default",
+            "timeouts": null,
+            "user_data": "#!/bin/bash\n\n# Install Apche, PHP, MySQL client, and WordPress\n\n# Update and install dependancies\napt-get update -y\napt-get install -y apache2 php php-mysql libapache2-mod-php mysql-client unzip curl\n\n# Download and Set up WordPress\ncurl -O https://wordpress.org/latest.tar.gz\ntar -xzf latest.tar.gz\ncp -r wordpress/* /var/www/html\n\n# Set permissions\nchown -R www-data:www-data /var/www/html/\nchown -R 775 /var/www/html/\n\n# Configure Apache\ncat \u003c\u003cEOF \u003e /etc/apache2/sites-available/000-default.conf\n\u003cVirtualHost *:80\u003e\n    DocumentRoot /var/www/html\n    \u003cDirectory /var/www/html\u003e\n        AllowOverride All\n    \u003c/Directory\u003e\n\u003c/VirtualHost\u003e\nEOF\n\n# Use PHP to allow wordpress to connect to the correct database with the right credentials\ncat \u003e /var/www/html/wp-config.php \u003c\u003cEOF\n\u003c?php\ndefine('DB_NAME', 'wordpress');\ndefine('DB_USER', 'admin');\ndefine('DB_PASSWORD', 'chelsea');\ndefine('DB_HOST', 'host.docker.internal');\ndefine('DB_CHARSET', 'utf8');\ndefine('DB_COLLATE', '');\n?\u003e\nEOF\n\n# Enable Apache modules\na2enmod rewrite\nsystemctl restart apache\n\necho \"Running WordPress on port 80\" \u003e /var/www/html/index.html",
+            "user_data_base64": null,
+            "user_data_replace_on_change": false,
+            "volume_tags": null,
+            "vpc_security_group_ids": [
+              "sg-7c5fe4dacef213015"
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMCwicmVhZCI6OTAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMiJ9",
+          "dependencies": [
+            "module.ec2.aws_security_group.dynamic-sg"
+          ]
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
